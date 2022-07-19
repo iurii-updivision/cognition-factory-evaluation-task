@@ -3,7 +3,6 @@ import PdfEditor from '@/components/PdfEditor.vue'
 </script>
 
 <template>
-  <main>
-    <PdfEditor src="location" />
-  </main>
+  <PdfEditor src="samples/sample1.pdf" />
+  <PdfEditor src="samples/sample2.pdf" />
 </template>

@@ -2,7 +2,11 @@
 
 #app {
   margin: 0 auto;
-  padding: 2rem;
 
   font-weight: normal;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  background-color: var(--color-background-mute);
 }
