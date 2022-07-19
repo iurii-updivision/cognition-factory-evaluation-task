@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import TheWelcome from '@/components/TheWelcome.vue'
+import PdfEditor from "@/components/PdfEditor.vue";
 </script>
 
 <template>
   <main>
-    <TheWelcome />
+    <PdfEditor src="location" />
   </main>
 </template>
