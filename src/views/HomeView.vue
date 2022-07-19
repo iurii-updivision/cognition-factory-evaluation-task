@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import PdfEditor from "@/components/PdfEditor.vue";
+import PdfEditor from '@/components/PdfEditor.vue'
 </script>
 
 <template>
