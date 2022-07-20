@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { nextTick, ref, toRef } from 'vue'
 import renderPdf from '@/modules/pdf-renderer'
-import type { Node, ShapeVariant } from '@/modules/overlay-editor'
+import type { ClickHandler, Node, ShapeVariant } from '@/modules/overlay-editor'
 import initiateOverlay from '@/modules/overlay-editor'
 
 type ElementInstance = InstanceType<typeof Element>
@@ -9,6 +9,7 @@ type ElementInstance = InstanceType<typeof Element>
 type Props = {
   src: string
   shapeVariant: ShapeVariant
+  shapeClickHandler: ClickHandler
 }
 
 const props = withDefaults(defineProps<Props>(), {})
@@ -31,7 +32,7 @@ nextTick(async () => {
     pages: pages.value,
   })
 
-  initiateOverlay(overlayRefs.value, shapeVariant)
+  initiateOverlay(overlayRefs.value, shapeVariant, props.shapeClickHandler)
 })
 </script>
 

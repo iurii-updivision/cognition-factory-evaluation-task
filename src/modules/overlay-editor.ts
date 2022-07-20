@@ -23,6 +23,8 @@ export enum ShapeVariant {
   Rectangle,
 }
 
+export type ClickHandler = (event: MouseEvent) => void
+
 const getPointerMovementDelta = (
   initial: PointerPosition,
   current: PointerPosition,
@@ -50,7 +52,11 @@ const getPointerMovementDelta = (
   return delta
 }
 
-export default (nodes: Node[], shapeVariant: Ref<ShapeVariant>) => {
+export default (
+  nodes: Node[],
+  shapeVariant: Ref<ShapeVariant>,
+  onClick: ClickHandler,
+) => {
   const prepareNode = (node: Node) => {
     type Shape = Selection<SVGSVGElement, unknown, null, undefined>
     type Circle = Selection<SVGCircleElement, unknown, null, undefined>
@@ -83,6 +89,8 @@ export default (nodes: Node[], shapeVariant: Ref<ShapeVariant>) => {
         position.left = event.offsetX - 2
 
         shape.container = d3.select(node.element).append('svg')
+
+        shape.container.on('click', onClick)
         shape.container.attr('width', 2)
         shape.container.attr('height', 2)
         shape.container.attr('class', 'shape-container')
