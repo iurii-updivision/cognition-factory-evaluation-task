@@ -1,18 +1,21 @@
 <script setup lang="ts">
-import { nextTick, ref } from 'vue'
+import { nextTick, ref, toRef } from 'vue'
 import renderPdf from '@/modules/pdf-renderer'
 import type { Node, ShapeVariant } from '@/modules/overlay-editor'
-import initiateOverlay, {
-  ShapeVariant as ShapeVariantEnum,
-} from '@/modules/overlay-editor'
+import initiateOverlay from '@/modules/overlay-editor'
 
 type ElementInstance = InstanceType<typeof Element>
 
-const props = withDefaults(defineProps<{ src: string }>(), {})
+type Props = {
+  src: string
+  shapeVariant: ShapeVariant
+}
+
+const props = withDefaults(defineProps<Props>(), {})
 const pages = ref<string[]>([])
 const containerRef = ref<HTMLDivElement>()
 const overlayRefs = ref<Node[]>([])
-const shapeVariant = ref<ShapeVariant>(ShapeVariantEnum.Rectangle)
+const shapeVariant = toRef(props, 'shapeVariant')
 
 const bindOverlayRef = (name: string, element: ElementInstance) => {
   if (!overlayRefs.value.find((r) => r.name === name)) {
