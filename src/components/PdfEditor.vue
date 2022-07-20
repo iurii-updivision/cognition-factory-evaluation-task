@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { nextTick, ref } from 'vue'
 import renderPdf from '@/modules/pdf-renderer'
-import initiateOverlay from '@/modules/overlay-editor'
-import type { Node } from '@/modules/overlay-editor'
+import type { Node, ShapeVariant } from '@/modules/overlay-editor'
+import initiateOverlay, {
+  ShapeVariant as ShapeVariantEnum,
+} from '@/modules/overlay-editor'
 
 type ElementInstance = InstanceType<typeof Element>
 
@@ -10,6 +12,7 @@ const props = withDefaults(defineProps<{ src: string }>(), {})
 const pages = ref<string[]>([])
 const containerRef = ref<HTMLDivElement>()
 const overlayRefs = ref<Node[]>([])
+const shapeVariant = ref<ShapeVariant>(ShapeVariantEnum.Rectangle)
 
 const bindOverlayRef = (name: string, element: ElementInstance) => {
   if (!overlayRefs.value.find((r) => r.name === name)) {
@@ -25,7 +28,7 @@ nextTick(async () => {
     pages: pages.value,
   })
 
-  initiateOverlay(overlayRefs.value)
+  initiateOverlay(overlayRefs.value, shapeVariant)
 })
 </script>
 
@@ -82,16 +85,18 @@ nextTick(async () => {
   position: absolute;
 }
 .shape-container > * {
-  fill: rgba(0, 0, 0, 0.08);
+  mix-blend-mode: multiply;
+}
+.shape-container > * {
+  fill: rgba(255, 0, 0, 0.9);
 }
 .shape-container.finished {
   cursor: pointer;
 }
 .shape-container.finished > * {
-  stroke: none;
-  fill: rgba(0, 0, 0, 0.2);
+  fill: rgba(255, 0, 0, 0.5);
 }
 .shape-container.finished:hover > * {
-  fill: rgba(0, 0, 0, 0.4);
+  fill: rgba(255, 0, 0, 0.9);
 }
 </style>
